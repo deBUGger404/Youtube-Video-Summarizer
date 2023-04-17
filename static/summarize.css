@@ -1,0 +1,164 @@
+@font-face {
+  font-family: 'Sriracha';
+  src: url('/static/Sriracha-Regular.ttf');
+}
+
+
+
+body {font-family: 'Sriracha';}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Sriracha';
+}
+
+.logo img {
+  height: 35px;
+  width: 200px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  margin-right: 50px;
+  margin-top: 20px;
+}
+
+.menu li {
+  margin-right: 20px;
+  padding-right: 80px;
+  font-size: 20px;
+}
+
+.menu li:last-child {
+  margin-right: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+}
+/* Style the tab */
+
+.body-content{
+  align-items: center;
+  padding: 20px;
+  font-family: 'Sriracha';
+}
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  width: calc(100% / 3);
+
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+/* trasncript */
+#Transcript {
+	display: flex;
+  overflow: hidden;
+}
+
+.Transcript-items{
+  font-family: 'Sriracha';
+	font-size: 14px;
+	line-height: 1.5;
+	padding: 20px;
+	background-color: #f7f7f7;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+  margin-bottom: 10px;
+}
+
+#time {
+	flex-basis: 50px;
+  padding-left: 10px;
+  color:blue;
+}
+
+#text {
+	flex-grow: 1;
+	padding-left: 10px;
+}
+
+/* video info */
+.video-info-des{
+  font-family: 'Sriracha';
+	font-size: 14px;
+  /* align-items: center; */
+  padding: 20px;
+  max-width: 400px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+th, td {
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+th {
+  background-color: #f2f2f2;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

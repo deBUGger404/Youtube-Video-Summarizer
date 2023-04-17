@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Output</title>
+</head>
+<body>
+	<h1>Summary:</h1>
+	<p id="summary"></p>
+	<h1>Highlight:</h1>
+	<p id="highlight"></p>
+	<script>
+		var summary = decodeURIComponent(window.location.search.substring(1).split("&")[0].split("=")[1]);
+		var highlight = decodeURIComponent(window.location.search.substring(1).split("&")[1].split("=")[1]);
+		document.getElementById("summary").innerHTML = summary;
+		document.getElementById("highlight").innerHTML = highlight;
+	</script>
+</body>
+</html>

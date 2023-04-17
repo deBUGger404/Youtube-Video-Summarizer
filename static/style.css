@@ -1,0 +1,188 @@
+@font-face {
+    font-family: 'Sriracha';
+    src: url('/static/Sriracha-Regular.ttf');
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Sriracha';
+  }
+  
+  .logo img {
+    height: 35px;
+    width: 200px;
+    margin-left: 30px;
+    margin-top: 20px;
+  }
+  
+  .menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    margin-right: 50px;
+    margin-top: 20px;
+  }
+  
+  .menu li {
+    margin-right: 20px;
+    padding-right: 80px;
+    font-size: 20px;
+  }
+  
+  .menu li:last-child {
+    margin-right: 0;
+  }
+  
+  .menu a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  .body-content {
+    font-family: 'Sriracha';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 230px); /* 50px for header, 100px for spacing */
+  }
+  
+  .content-wrapper {
+    max-width: 800px; /* adjust to your desired value */
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;    
+    text-align: center;
+  }
+  
+  .paragraph-wrapper {
+    max-width: 700px;
+    margin-bottom: 40px; /* spacing between paragraph and form */
+    font-size: 20px;
+  }
+  
+  .form-wrapper {
+    max-width: 700px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px; /* spacing between paragraph and form */
+    margin-right: 20px;
+  }
+
+  form {
+    max-width: 700px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  input {
+    margin: 0px;
+    width: 100%;
+    outline: none;
+    height: 30px;
+    border-radius: 5px;
+    display: block; 
+}
+
+  input[type="text"] {
+    font-size: 16px;
+    font-family: 'Sriracha';
+    padding: 10px;
+    padding-left: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%; 
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }  
+
+  button {
+    margin-top: 5%;
+    border-radius: 5px;
+    z-index: 2;
+    border: none;
+    height: 45px;
+    width: 140px;
+    font-size: 20px;
+    font-family: 'Sriracha';
+    cursor: pointer;
+    color: white;
+    background-color: #1e90ff;
+    transform: translateX(2px);
+}
+
+footer{
+  /* background-color: #333; */
+  color: #6c6969;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Sriracha';
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .menu li {
+    font-size: 16px;
+    padding-right: 30px;
+  }
+  
+  .logo img {
+    height: 30px;
+    margin-top: 20px;
+  }
+  
+  .menu {
+    margin-right: 10px;
+  }
+  
+  .body-content {
+    height: auto;
+  }
+  .content-wrapper {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .paragraph-wrapper {
+    max-width: 100%;
+    font-size: 18px;
+  }
+
+  .form-wrapper {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    margin-right: 10px;
+  }
+  
+  button {
+    margin-top: 10%;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 18px;
+    height: 40px;
+  }
+}

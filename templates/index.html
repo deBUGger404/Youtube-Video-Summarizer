@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{{title}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+    </head>
+
+    <body>
+        <nav>
+            <div class="logo">
+              <a href="/">
+                <img src="{{ url_for('static', filename='main_logo.png') }}" alt="My Logo">
+              </a>
+            </div>
+            <ul class="menu">
+              <li><a href="/">Summarize</a></li>
+              <li><a href="/about">SignUp</a></li>
+              <li><a href="/contact">LogIn</a></li>
+            </ul>
+          </nav>
+
+          <div class="body-content">
+            <div class="content-wrapper">
+              <div class="paragraph-wrapper">
+                <p>Transform numerous hours of content into a concise summary of the key ideas, all within a few short minutes!</p>
+              </div>
+              <div class="form-wrapper"></div>
+                <form action="/splashScreen" method="post">
+                  <input type="text" name="value"  placeholder="Please paste Youtube Video link here">
+                  <button type="submit" id="myButton">Summarize</button>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        <footer>
+            <p>© 2023 Trianscribus. All Rights Reserved.</p>
+        </footer>
+    </body>
+</html>
