@@ -105,8 +105,9 @@ def get_youtube_transcript(youtube_url):
 def openAI_summary(transct_text, api_key, type = 'summary'):
     print(api_key)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-    llm = OpenAI(temperature=0, openai_api_key=api_key, max_tokens=512, streaming=False)
+    llm = OpenAI(temperature=0, openai_api_key=api_key, max_tokens=256, streaming=False)
     texts = text_splitter.split_documents(transct_text)
+    print(texts)
     print('here4')
     if type=='summary': prompt_template = prompt_template1
     elif type=='highlight': prompt_template = prompt_template2
@@ -115,6 +116,8 @@ def openAI_summary(transct_text, api_key, type = 'summary'):
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
         print(PROMPT)
         chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=False, map_prompt=PROMPT, combine_prompt=PROMPT)
+        print('here45')
+        print(chain)
         response = chain.run(texts)
         print('here5')
         return response
