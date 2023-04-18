@@ -28,11 +28,11 @@
 
 <div id="Summarize" class="tabcontent">
   <h3>Summarize</h3>
-  <p>{{summary}}</p>
+  <p>{{summaryv2}}</p>
   <hr/>
   <h3>Highlights</h3>
   <ul>
-    {% for hight in highlight.split(". ") %}
+    {% for hight in highlightv2.split(". ") %}
     {% if hight.strip() %}
       <li>{{ hight.strip() }}</li>
     {% endif %}

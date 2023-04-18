@@ -39,29 +39,29 @@ def home():
 
 @app.route('/splashScreen', methods=['POST'])
 def splash():
-    value = request.form['value']
-    return render_template('splashScreen.html',title='Transcribus', value=value)
+    videoUrl = request.form['videoUrl']
+    return render_template('splashScreen.html',title='Transcribus', videoUrl=videoUrl)
 
 
 @app.route('/output', methods=['POST'])
 def target_page():
-    value = request.args.get('videoid')
-    long_trnasct, video_info = get_llm_transcript(value)
-    transct = get_youtube_transcript(value)
+    videoUrl = request.args.get('videoUrl')
+    long_trnasct, video_info = get_llm_transcript(videoUrl)
+    transct = get_youtube_transcript(videoUrl)
     # summary = openAI_summary(long_trnasct,get_api_key(), 'summary')
     # highlight = openAI_summary(long_trnasct,get_api_key(), 'highlight')
-    summary = 'hi here is the error'
-    highlight = 'hi here is the error'
-    response =  json.dumps({'summary': json.dumps(summary), 'highlight': json.dumps(highlight), 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
+    summaryv2 = 'hi here is the error'
+    highlightv2 = 'hi here is the error'
+    response =  json.dumps({'summary': json.dumps(summaryv2), 'highlight': json.dumps(highlightv2), 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
     return response
 
 @app.route('/summarize')
 def output():
-    summary = json.loads(request.args.get('summary'))
-    highlight =  json.loads(request.args.get('highlight'))
+    summaryv2 = json.loads(request.args.get('summary'))
+    highlightv2 =  json.loads(request.args.get('highlight'))
     transct = json.loads(request.args.get('transct'))
     video_info = json.loads(request.args.get('video_info'))
-    return render_template('summarize.html', title='Transcribus', summary=summary, highlight=highlight, transct=transct,video_info=video_info)
+    return render_template('summarize.html', title='Transcribus', summaryv2=summaryv2, highlightv2=highlightv2, transct=transct,video_info=video_info)
 
 def get_api_key():
     config = configparser.ConfigParser()

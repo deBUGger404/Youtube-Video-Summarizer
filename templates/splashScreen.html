@@ -23,10 +23,10 @@
 	<lottie-player id="loader" src="{{ url_for('static', filename='loading.json') }}"  autoplay loop></lottie-player>
     <h2>Data fetching may take a little time, please bear with us...</h2>
 	<script>
-        var value = "{{ value }}";
+        var videoUrl = "{{ videoUrl }}";
 		window.addEventListener("load", function() {
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "/output?videoid=" + encodeURIComponent(value), true);
+			xhr.open("POST", "/output?videoUrl=" + encodeURIComponent(videoUrl), true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState === 4 && xhr.status === 200) {
