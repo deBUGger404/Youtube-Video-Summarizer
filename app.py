@@ -48,10 +48,10 @@ def target_page():
     videoUrl = request.args.get('videoUrl')
     long_trnasct, video_info = get_llm_transcript(videoUrl)
     transct = get_youtube_transcript(videoUrl)
-    # summary = openAI_summary(long_trnasct,get_api_key(), 'summary')
-    # highlight = openAI_summary(long_trnasct,get_api_key(), 'highlight')
-    summaryv2 = 'hi here is the error'
-    highlightv2 = 'hi here is the error'
+    summaryv2 = openAI_summary(long_trnasct,get_api_key(), 'summary')
+    highlightv2 = openAI_summary(long_trnasct,get_api_key(), 'highlight')
+    # summaryv2 = 'hi here is the error'
+    # highlightv2 = 'hi here is the error'
     response =  json.dumps({'summary': json.dumps(summaryv2), 'highlight': json.dumps(highlightv2), 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
     return response
 
