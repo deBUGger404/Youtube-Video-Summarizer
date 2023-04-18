@@ -37,30 +37,31 @@ CONCISE SUMMARY:"""
 def home():
     return render_template("index.html",title='Transcribus')
 
-@app.route('/splashScreen', methods=['POST'])
-def splash():
-    value = request.form['value']
-    return render_template('splashScreen.html',title='Transcribus', value=value)
+# @app.route('/splashScreen', methods=['POST'])
+# def splash():
+#     value = request.form['value']
+#     return render_template('splashScreen.html',title='Transcribus', value=value)
 
 
-@app.route('/output', methods=['POST'])
+@app.route('/summarize', methods=['POST'])
 def target_page():
-    value = request.args.get('videoid')
+    # value = request.args.get('videoid')
+    value = request.form['value']
     print(value)
     long_trnasct, video_info = get_llm_transcript(value)
     transct = get_youtube_transcript(value)
     summary = openAI_summary(long_trnasct,get_api_key(), 'summary')
     highlight = openAI_summary(long_trnasct,get_api_key(), 'highlight')
     print(summary)
-    response =  json.dumps({'summary': summary, 'highlight': highlight, 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
-    return response
+#     response =  json.dumps({'summary': summary, 'highlight': highlight, 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
+#     return response
 
-@app.route('/summarize')
-def output():
-    summary = request.args.get('summary')
-    highlight = request.args.get('highlight')
-    transct = json.loads(request.args.get('transct'))
-    video_info = json.loads(request.args.get('video_info'))
+# @app.route('/summarize')
+# def output():
+#     summary = request.args.get('summary')
+#     highlight = request.args.get('highlight')
+#     transct = json.loads(request.args.get('transct'))
+#     video_info = json.loads(request.args.get('video_info'))
     return render_template('summarize.html', title='Transcribus', summary=summary, highlight=highlight, transct=transct,video_info=video_info)
 
 def get_api_key():
