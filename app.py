@@ -48,16 +48,15 @@ def target_page():
     value = request.args.get('videoid')
     long_trnasct, video_info = get_llm_transcript(value)
     transct = get_youtube_transcript(value)
-    # summary = openAI_summary(long_trnasct,get_api_key(), 'summary')
+    summary = openAI_summary(long_trnasct,get_api_key(), 'summary')
     highlight = openAI_summary(long_trnasct,get_api_key(), 'highlight')
-    summary='hi here is the error'
-    response =  json.dumps({'summary': summary, 'highlight': highlight, 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
+    response =  json.dumps({'summary': json.dumps(summary), 'highlight': json.dumps(highlight), 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
     return response
 
 @app.route('/summarize')
 def output():
-    summary = request.args.get('summary')
-    highlight = request.args.get('highlight')
+    summary = json.loads(request.args.get('summary'))
+    highlight =  json.loads(request.args.get('highlight'))
     transct = json.loads(request.args.get('transct'))
     video_info = json.loads(request.args.get('video_info'))
     return render_template('summarize.html', title='Transcribus', summary=summary, highlight=highlight, transct=transct,video_info=video_info)
