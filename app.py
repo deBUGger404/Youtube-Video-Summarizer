@@ -87,6 +87,7 @@ def get_youtube_transcript(youtube_url):
     except NoTranscriptFound:
         transcript = transcript_list.find_transcript(["en"])
         error = 'not available in selected language'
+    print('here1')
     captions_dict = defaultdict(list)
     for caption in transcript.fetch():
         start_time = round(caption['start'] / 60) * 60
@@ -98,9 +99,11 @@ def get_youtube_transcript(youtube_url):
         time_formatted = f"{minutes:02d}:{seconds:02d}"
         captions_formatted = "\n".join([caption for caption in captions])
         captions_final[time_formatted] = captions_formatted.strip()
+    print('here2')
     return captions_final
 
 def openAI_summary(transct_text, api_key, type = 'summary'):
+    print(api_key)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     llm = OpenAI(temperature=0, openai_api_key=api_key, max_tokens=512, streaming=False)
     texts = text_splitter.split_documents(transct_text)
