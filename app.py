@@ -107,13 +107,16 @@ def openAI_summary(transct_text, api_key, type = 'summary'):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     llm = OpenAI(temperature=0, openai_api_key=api_key, max_tokens=512, streaming=False)
     texts = text_splitter.split_documents(transct_text)
+    print('here4')
     if type=='summary': prompt_template = prompt_template1
     elif type=='highlight': prompt_template = prompt_template2
     else: print(f'Specify the correct Type')
     try:
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
+        print(PROMPT)
         chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=False, map_prompt=PROMPT, combine_prompt=PROMPT)
         response = chain.run(texts)
+        print('here5')
         return response
     except:
         return 'Some error in API'
