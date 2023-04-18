@@ -46,10 +46,12 @@ def splash():
 @app.route('/output', methods=['POST'])
 def target_page():
     value = request.args.get('videoid')
+    print(value)
     long_trnasct, video_info = get_llm_transcript(value)
     transct = get_youtube_transcript(value)
     summary = openAI_summary(long_trnasct,get_api_key(), 'summary')
     highlight = openAI_summary(long_trnasct,get_api_key(), 'highlight')
+    print(summary)
     response =  json.dumps({'summary': summary, 'highlight': highlight, 'transct':json.dumps(transct), 'video_info':json.dumps(video_info)})
     return response
 
@@ -106,6 +108,7 @@ def openAI_summary(transct_text, api_key, type = 'summary'):
     elif type=='highlight': prompt_template = prompt_template2
     else: print(f'Specify the correct Type')
     try:
+        print(prompt_template)
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
         chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=False, map_prompt=PROMPT, combine_prompt=PROMPT)
         response = chain.run(texts)
