@@ -3,7 +3,7 @@
 This is a Flask-based web application that serves as a YouTube video summarizer. It uses various libraries and APIs to fetch video transcripts, perform text summarization, and generate concise summaries using ChatGPT and highlights of YouTube video content.
 
 ## App Name
-# Transcribus
+Transcribus
 
 ## Setup
 
