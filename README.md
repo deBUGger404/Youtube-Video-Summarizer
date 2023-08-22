@@ -1,6 +1,6 @@
 # YouTube Video Summarizer App
 
-This is a Flask-based web application that serves as a YouTube video summarizer. It uses various libraries and APIs to fetch video transcripts, perform text summarization, and generate concise summaries and highlights of YouTube video content.
+This is a Flask-based web application that serves as a YouTube video summarizer. It uses various libraries and APIs to fetch video transcripts, perform text summarization, and generate concise summaries using ChatGPT and highlights of YouTube video content.
 
 ## App Name
 # Transcribus
@@ -37,7 +37,7 @@ The app follows the following workflow:
 - User provides a YouTube video URL.
 - The app fetches the video transcript using the YouTube API.
 - The transcript is split into chunks for processing.
-- OpenAI API is used to generate summaries and highlights using predefined templates.
+- OpenAI API (ChatGPT) is used to generate summaries and highlights using predefined templates.
 - The summarized content is displayed to the user.
 
 ## Contributing
