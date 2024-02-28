@@ -9,7 +9,7 @@ This is a Flask-based web application that serves as a YouTube video summarizer.
 </p>
 <!-- ![App Screenshot](Transcribus_landing_page.png) -->
 
-Url of Page: [Transcribus](https://transcibus.vercel.app/)
+Url of Page: [Transcribus]([https://youtube-video-summarizer-rho.vercel.app/])
 
 ## Setup
 
