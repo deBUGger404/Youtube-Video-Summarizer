@@ -51,11 +51,36 @@
     document.addEventListener('DOMContentLoaded', function () {
       // Attach event listener for form submission
       document.getElementById('videoUrlForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Always prevent the default form submission initially
+
         const apiKey = localStorage.getItem('apiKey');
         if (!apiKey) {
-          event.preventDefault(); // Prevent form from submitting
-          document.getElementById('error-message').style.display = 'inline'; // Show error message
-          return false; // Stop the function
+          // Show error message if API key is not found
+          document.getElementById('error-message').style.display = 'inline';
+        } else {
+          // If API key exists, send it to the server to save in the session
+          fetch('/set_api_key', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ apiKey: apiKey }),
+          }).then(response => {
+            if (response.ok) {
+              console.log('API Key saved to session');
+              // Submit the form programmatically if the API key was successfully saved
+              document.getElementById('videoUrlForm').submit();
+            } else {
+              // Handle the case where saving the API key was not successful
+              document.getElementById('error-message').innerText = 'Failed to save API Key. Please try again.';
+              document.getElementById('error-message').style.display = 'inline';
+            }
+          }).catch(error => {
+            // Handle any network errors
+            console.error('Error saving API Key:', error);
+            document.getElementById('error-message').innerText = 'Network error. Please try again.';
+            document.getElementById('error-message').style.display = 'inline';
+          });
         }
       });
 
