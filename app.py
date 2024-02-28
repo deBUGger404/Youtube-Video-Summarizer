@@ -16,6 +16,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
 
+
 app = Flask(__name__)
 app.secret_key = '3d6f45a5fc12445dbac2f59c3b6c7cb1'
 # Load environment variables from .env file
@@ -23,7 +24,12 @@ load_dotenv()
 
 # print('mangi url', os.getenv("MONGO_DB_URI"))
 client = MongoClient(os.getenv("MONGO_DB_URI"), server_api=ServerApi('1'))
-db = client.trakss
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+db = client['trakss']
 
 @app.route("/")
 def home():
@@ -34,7 +40,7 @@ def home():
 def set_api_key():
     data = request.get_json()
     session['api_key'] = data['apiKey']
-    print(data)
+    # print(data)
     return jsonify({"message": "API Key saved successfully"}), 200
 
 @app.route('/splashScreen', methods=['POST'])
@@ -53,8 +59,8 @@ def process_video():
     print('process-data:', highlightv2)
     # Store data in the database
     video_data = {
-        'summary': summaryv2,
-        'highlight': highlightv2,
+        'summary': summaryv2['output_text'] if 'output_text' in summaryv2 else None,
+        'highlight': highlightv2['output_text'] if 'output_text' in highlightv2 else None,
         'transct': json.dumps(transct),
         'video_info': json.dumps(video_info)
     }
@@ -65,7 +71,7 @@ def process_video():
 def output():
     # Retrieve data from the database
     video_data = db.public.find_one()
-    print('summrize', video_data)
+    # print('summrize', video_data)
     if video_data:
         summaryv2 = video_data['summary']
         highlightv2 = video_data['highlight']
@@ -102,7 +108,7 @@ def get_youtube_transcript(youtube_url):
     except NoTranscriptFound:
         transcript = transcript_list.find_transcript(["en"])
         error = 'not available in selected language'
-    print('here1')
+    # print('here1')
     captions_dict = defaultdict(list)
     for caption in transcript.fetch():
         start_time = round(caption['start'] / 60) * 60
@@ -117,11 +123,11 @@ def get_youtube_transcript(youtube_url):
     return captions_final
 
 def openAI_summary(transct_text, api_key, type = 'summary'):
-    print('open api', api_key)
+    # print('open api', api_key)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     llm = OpenAI(temperature=0, openai_api_key=api_key, max_tokens=256, streaming=False)
     texts = text_splitter.split_documents(transct_text)
-    print('here4')
+    # print('here4')
     if type=='summary': prompt_template = prompt_template1
     elif type=='highlight': prompt_template = prompt_template2
     else: print(f'Specify the correct Type')
@@ -129,10 +135,10 @@ def openAI_summary(transct_text, api_key, type = 'summary'):
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
         # print(PROMPT)
         chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=False, map_prompt=PROMPT, combine_prompt=PROMPT)
-        print('here45')
+        # print('here45')
         # print(chain)
         response = chain.invoke(texts)
-        print('here5')
+        # print('here5')
         return response
     except:
         return 'Some error in API'
