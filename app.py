@@ -130,7 +130,7 @@ def openAI_summary(transct_text, api_key, type = 'summary'):
         chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=False, map_prompt=PROMPT, combine_prompt=PROMPT)
         # print('here45')
         # print(chain)
-        response = chain.run(texts)
+        response = chain.invoke(texts)
         # print('here5')
         return response
     except:
