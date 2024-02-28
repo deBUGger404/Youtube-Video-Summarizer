@@ -34,6 +34,7 @@ def home():
 def set_api_key():
     data = request.get_json()
     session['api_key'] = data['apiKey']
+    print(data)
     return jsonify({"message": "API Key saved successfully"}), 200
 
 @app.route('/splashScreen', methods=['POST'])
@@ -49,7 +50,7 @@ def process_video():
     transct = get_youtube_transcript(videoUrl)
     summaryv2 = openAI_summary(long_trnasct, api_key, 'summary')
     highlightv2 = openAI_summary(long_trnasct, api_key, 'highlight')
-    # print(highlightv2)
+    print('process-data:', highlightv2)
     # Store data in the database
     video_data = {
         'summary': summaryv2,
@@ -64,7 +65,7 @@ def process_video():
 def output():
     # Retrieve data from the database
     video_data = db.public.find_one()
-    # print(video_data)
+    print('summrize', video_data)
     if video_data:
         summaryv2 = video_data['summary']
         highlightv2 = video_data['highlight']
@@ -82,7 +83,7 @@ def output():
 
 
 def get_llm_transcript(youtube_url):
-        # print(youtube_url)
+        print('uyoutube url', youtube_url)
         loader = YoutubeLoader.from_youtube_url(str(youtube_url),  add_video_info=True)
         result = loader.load()
         try:
@@ -101,7 +102,7 @@ def get_youtube_transcript(youtube_url):
     except NoTranscriptFound:
         transcript = transcript_list.find_transcript(["en"])
         error = 'not available in selected language'
-    # print('here1')
+    print('here1')
     captions_dict = defaultdict(list)
     for caption in transcript.fetch():
         start_time = round(caption['start'] / 60) * 60
@@ -116,11 +117,11 @@ def get_youtube_transcript(youtube_url):
     return captions_final
 
 def openAI_summary(transct_text, api_key, type = 'summary'):
-    # print(api_key)
+    print('open api', api_key)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     llm = OpenAI(temperature=0, openai_api_key=api_key, max_tokens=256, streaming=False)
     texts = text_splitter.split_documents(transct_text)
-    # print('here4')
+    print('here4')
     if type=='summary': prompt_template = prompt_template1
     elif type=='highlight': prompt_template = prompt_template2
     else: print(f'Specify the correct Type')
@@ -128,10 +129,10 @@ def openAI_summary(transct_text, api_key, type = 'summary'):
         PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
         # print(PROMPT)
         chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=False, map_prompt=PROMPT, combine_prompt=PROMPT)
-        # print('here45')
+        print('here45')
         # print(chain)
         response = chain.invoke(texts)
-        # print('here5')
+        print('here5')
         return response
     except:
         return 'Some error in API'
