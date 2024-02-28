@@ -13,9 +13,9 @@
       </a>
     </div>
     <ul class="menu">
-      <li><a href="/">Summarize</a></li>
-      <li><a href="/about">SignUp</a></li>
-      <li><a href="/contact">LogIn</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="https://github.com/deBUGger404">Github</a></li>
+      <li><a href="https://trakssapp.com/">Contact</a></li>
     </ul>
   </nav>
 
@@ -32,11 +32,9 @@
   <hr/>
   <h3>Highlights</h3>
   <ul>
-    {% for hight in highlightv2.split(". ") %}
-    {% if hight.strip() %}
-      <li>{{ hight.strip() }}</li>
-    {% endif %}
-  {% endfor %}
+    {% for highlight in highlightv2.strip().split("\n") %}
+      <li>{{ highlight[1:] }}</li>
+    {% endfor %}
   </ul>
 </div>
 
