@@ -33,7 +33,7 @@ Rename config.ini.example to config.ini and provide your OpenAI API key.
 - Access the web interface through your browser and follow the instructions to summarize a YouTube video.
 
 ## Features
-Fetches video transcripts using the YouTube API.
+- Fetches video transcripts using the YouTube API.
 - Utilizes OpenAI API for text summarization.
 - Provides both a full summary and highlights of the video content.
 - Displays the transcript and generated summaries on the web interface.
