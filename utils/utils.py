@@ -6,12 +6,6 @@ from openai import OpenAI
 # from langchain.prompts import PromptTemplate
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound
 
-import re
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
-
-executor = ThreadPoolExecutor()
-
 # promat template
 prompt_template1 = """## Video Content Distillation
 
@@ -25,32 +19,12 @@ As a specialist in distilling video content, your task is to extract and present
 
 **Output Format:** Use Markdown to format your work. Begin with the concise summary, followed by the bullet-pointed highlights. This structured approach will ensure clarity and ease of reading."""
 
-def extract_youtube_video_id(url):
-    # Define the regular expression pattern
-    pattern = r'(?<=v=)([\w-]+)'
-    # Use re.search to find the match in the URL
-    match = re.search(pattern, url)
-    if match:
-        url_video_id = match.group(1)
-        return url_video_id
-    else:
-        return None
-    
-def fetch_transcript1(youtube_url):
-    loader = YoutubeLoader.from_youtube_url(str(youtube_url), add_video_info=True)
-    result = loader.load()
-    return result
 
-def fetch_transcript2(youtube_url):
-    video_id = extract_youtube_video_id(youtube_url)
-    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-    return transcript_list
-
-async def get_llm_transcript(youtube_url):
+def get_llm_transcript(youtube_url):
     try:
         print('youtube url', youtube_url)
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(executor, fetch_transcript1, youtube_url)
+        loader = YoutubeLoader.from_youtube_url(str(youtube_url), add_video_info=True)
+        result = loader.load()
         # Check if result has at least one item to avoid IndexError
         if result and len(result) > 0:
             text, details = result[0].page_content, result[0].metadata
@@ -62,9 +36,10 @@ async def get_llm_transcript(youtube_url):
         print(f"An error occurred: {e}")
         return "Error loading transcript", {}
 
-async def get_youtube_transcript(youtube_url):
-    loop = asyncio.get_event_loop()
-    transcript_list = await loop.run_in_executor(executor, fetch_transcript2, youtube_url)
+def get_youtube_transcript(youtube_url):
+    video_id = youtube_url.split("youtube.com/watch?v=")[-1]
+    print(video_id)
+    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
 
     # Attempt to directly select the preferred or fallback language
     try:
@@ -91,12 +66,7 @@ async def get_youtube_transcript(youtube_url):
     
     return captions_final
 
-async def openAI_summary(input_text, api_key):
-    loop = asyncio.get_event_loop()
-    reply = await loop.run_in_executor(executor, openaicompletion, input_text, api_key)
-    return reply
-
-def openaicompletion(input_text, api_key):
+def openAI_summary(input_text, api_key):
     client = OpenAI(api_key=api_key)
     response = client.chat.completions.create(
     model="gpt-3.5-turbo-0125",

@@ -194,6 +194,30 @@ footer {
   font-family: 'Sriracha';
 }
 
+#lottie-container {
+  display: flex;
+  align-items: center; /* Vertically center the contents */
+  justify-content: center; /* Horizontally center the contents */
+  height: 100vh; /* Full viewport height to center vertically in the viewport */
+  width: 100%; /* Full width */
+}
+
+#lottie-gifContainer {
+  width: 150px; /* Set a fixed width for the GIF container */
+  margin-right: 30px; /* Space between GIF and text */
+}
+
+#lottie-textContainer {
+  font-size: 16px; /* Adjust based on your preference */
+  max-width: calc(100% - 180px); /* Adjust based on the GIF width and margin */
+  font-family: 'Sriracha', cursive; /* Ensure the font is loaded or available */
+}
+
+#lottie-loader {
+  width: 100%; /* Makes the GIF responsive within its container */
+  max-width: 150px; /* Ensure this matches the container width to avoid overflow */
+}
+
 /* Media Queries */
 @media screen and (max-width: 768px) {
   .menu li {
