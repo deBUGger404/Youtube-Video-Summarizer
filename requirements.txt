@@ -1,0 +1,12 @@
+youtube_transcript_api==0.6.2
+openai==1.12.0
+langchain==0.1.9
+langchain-community==0.0.24
+tiktoken==0.6.0
+pytube==15.0.0.
+Jinja2==3.1.2
+click==8.1.7
+Flask==2.2.5
+python-dotenv==1.0.0
+pymongo==4.6.2
+langchain-openai==0.0.8

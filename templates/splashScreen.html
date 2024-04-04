@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+	<script src="https://cdn.jsdelivr.net/npm/@lottiefiles/lottie-player"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
+	<style>
+		@font-face {
+			font-family: 'Sriracha';
+			src: url('/static/Sriracha-Regular.ttf');
+			}
+
+		body {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		#container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%; /* Ensure the container takes full width */
+        }
+
+        #gifContainer {
+            width: 150px; /* Fixed width for the GIF container */
+            margin-right: 30px; /* Adjust the margin as needed */
+        }
+
+        #textContainer {
+            font-size: 16px; /* Adjust font size of the text */
+            max-width: calc(100% - 170px); /* Maximum width for text container (100% - gif container width - margin) */
+			font-family: 'Sriracha', cursive;
+        }
+
+        #loader {
+            width: 100%; /* Use 100% width for the GIF */
+			max-width: 200px;
+        }
+	</style>
+</head>
+<body>
+	<div id="container">
+        <div id="gifContainer">
+            <lottie-player id="loader" src="{{ url_for('static', filename='loading.json') }}" autoplay loop></lottie-player>
+        </div>
+        <div id="textContainer">
+            <h2>Data fetching may take a little time, please bear with us...</h2>
+        </div>
+    </div>
+	<script>
+        var videoUrl = "{{ videoUrl }}";
+		window.addEventListener("load", function() {
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/process_video?videoUrl=" + encodeURIComponent(videoUrl), true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					var response = JSON.parse(xhr.responseText);
+                    window.location.href = "/summarize";
+                }
+			};
+			xhr.send("value=" + encodeURIComponent(window.location.search.substring(1)));
+		});
+	</script>
+	<script>
+        // Array of text messages
+        var textArray = [
+			"<p>Initiating YouTube video transcription retrieval, please hold on for a moment..</h3>",
+			"<p>Employing RAG for extracting relevant information, your patience is appreciated...</p>",
+			"<p>Finalizing summary generation with GPT-3.5, almost there, thank you for waiting...</p>"
+        ];
+
+        // Function to display text with time interval
+        function displayTextWithInterval() {
+            var textContainer = document.getElementById("textContainer");
+            var index = 0;
+
+            // Display first text immediately
+            textContainer.innerHTML = textArray[index];
+
+            // Set interval to display subsequent texts
+            var intervalId = setInterval(function() {
+                index++;
+                if (index < textArray.length) {
+                    textContainer.innerHTML = textArray[index];
+                } else {
+                    clearInterval(intervalId); // Stop interval when all texts are displayed
+                }
+            }, 4000); // Change 5000 to the desired time interval in milliseconds (e.g., 5000 for 5 seconds)
+        }
+
+        // Call the function to start displaying texts
+        displayTextWithInterval();
+    </script>
+</body>
+</html>

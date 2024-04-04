@@ -1,0 +1,269 @@
+@font-face {
+  font-family: 'Sriracha';
+  src: url('/static/Sriracha-Regular.ttf');
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Sriracha';
+}
+
+.logo img {
+  height: 35px;
+  width: 200px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  margin-right: 40px;
+  margin-top: 20px;
+}
+
+.menu li {
+  margin-right: 0px;
+  padding-right: 60px;
+  font-size: 20px;
+}
+
+.menu li:last-child {
+  margin-right: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+}
+
+
+#api-key-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: none;
+  /* Ensure it's not displayed by default */
+  width: 50%;
+  /* Increase the width of the popup box */
+  max-width: 600px;
+  /* Set a max-width to ensure it doesn't get too wide on larger screens */
+}
+
+#api-key-modal input {
+  width: calc(100% - 10px);
+  /* Make input take full width of the modal, accounting for padding */
+  padding: 25px;
+  /* Further increase padding for greater height */
+  margin-bottom: 0px;
+  /* Slightly reduce space between the elements */
+  box-sizing: border-box;
+  /* Ensure padding doesn't add to the total width */
+  display: block;
+  /* Ensure input is a block element to take full width */
+}
+
+#api-key-modal button {
+  width: calc(50% - 10px);
+  /* Adjust width for buttons to sit side by side */
+  padding: 5px;
+  margin-top: 3%;
+  margin-bottom: 0;
+  /* Reduce margin bottom to bring buttons closer */
+  box-sizing: border-box;
+  cursor: pointer;
+  /* Change cursor to pointer when hovering over the buttons */
+  display: inline-block;
+  /* Display buttons inline-block to sit side by side */
+  margin-right: 10px;
+  /* Add right margin to only the first button */
+}
+
+/* Remove margin-right for the last button */
+#api-key-modal button:last-child {
+  margin-right: 0;
+}
+
+.body-content {
+  font-family: 'Sriracha';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 230px);
+  /* 50px for header, 100px for spacing */
+}
+
+.content-wrapper {
+  max-width: 800px;
+  /* adjust to your desired value */
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.paragraph-wrapper {
+  max-width: 700px;
+  margin-bottom: 40px;
+  /* spacing between paragraph and form */
+  font-size: 20px;
+}
+
+.form-wrapper {
+  max-width: 700px;
+  width: 100%;
+  margin-right: 20px; /* Ensure there's no additional padding affecting the width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="text"]#video-url-input {
+  width: 100%; /* This ensures the input takes the full width of its parent */
+  padding: 10px 15px; /* Adjust padding as needed, ensuring it's inside the total width */
+  margin: 0; /* Remove any margin that might affect the width */
+  box-sizing: border-box; /* This ensures padding and border are included in the width calculation */
+}
+
+form {
+  max-width: 700px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#video-url-input {
+  font-size: 16px;
+  font-family: 'Sriracha', sans-serif; /* Ensure fallback */
+  padding: 10px 30px; /* Adjust padding as needed */
+  border: none;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%; /* Ensure full width */
+  margin: 0; /* Adjust margin as needed */
+  display: block; /* Ensure it's displayed as a block element */
+}
+
+#video-url-input:focus {
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+
+button {
+  margin-top: 5%;
+  border-radius: 5px;
+  z-index: 2;
+  border: none;
+  height: 45px;
+  width: 140px;
+  font-size: 20px;
+  font-family: 'Sriracha';
+  cursor: pointer;
+  color: white;
+  background-color: #1e90ff;
+  transform: translateX(2px);
+}
+
+footer {
+  /* background-color: #333; */
+  color: #6c6969;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Sriracha';
+}
+
+#lottie-container {
+  display: flex;
+  align-items: center; /* Vertically center the contents */
+  justify-content: center; /* Horizontally center the contents */
+  height: 100vh; /* Full viewport height to center vertically in the viewport */
+  width: 100%; /* Full width */
+}
+
+#lottie-gifContainer {
+  width: 150px; /* Set a fixed width for the GIF container */
+  margin-right: 30px; /* Space between GIF and text */
+}
+
+#lottie-textContainer {
+  font-size: 16px; /* Adjust based on your preference */
+  max-width: calc(100% - 180px); /* Adjust based on the GIF width and margin */
+  font-family: 'Sriracha', cursive; /* Ensure the font is loaded or available */
+}
+
+#lottie-loader {
+  width: 100%; /* Makes the GIF responsive within its container */
+  max-width: 150px; /* Ensure this matches the container width to avoid overflow */
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .menu li {
+    font-size: 16px;
+    padding-right: 30px;
+  }
+
+  .logo img {
+    height: 30px;
+    margin-top: 20px;
+  }
+
+  .menu {
+    margin-right: 10px;
+  }
+
+  .body-content {
+    height: auto;
+  }
+
+  .content-wrapper {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .paragraph-wrapper {
+    max-width: 100%;
+    font-size: 18px;
+  }
+
+  .form-wrapper {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  #video-url-input[type="text"] {
+    width: 100%;
+    margin-right: 10px;
+  }
+
+  button {
+    margin-top: 10%;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 18px;
+    height: 40px;
+  }
+}

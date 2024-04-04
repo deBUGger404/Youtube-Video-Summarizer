@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+  <script src="https://cdn.jsdelivr.net/npm/@lottiefiles/lottie-player"></script>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
+</head>
+
+<body>
+  <nav>
+    <div class="logo">
+      <a href="/">
+        <img src="{{ url_for('static', filename='main_logo.png') }}" alt="My Logo">
+      </a>
+    </div>
+    <ul class="menu">
+      <li><a href="/">Summarize</a></li>
+      <li><a href="https://github.com/deBUGger404" target="_blank">Github</a></li>
+      <li><a href="https://github.com/deBUGger404/Youtube-Video-Summarizer/issues/new" target="_blank">Issues</a></li>
+      <li><a href="https://trakssblog.blogspot.com/" target="_blank">Blog</a></li>
+      <li><a href="#" id="api-key-trigger">API KEY</a></li>
+    </ul>
+  </nav>
+
+  <div class="body-content">
+    <div class="content-wrapper">
+      <div class="paragraph-wrapper">
+        <p>Transform numerous hours of content into a concise summary of the key ideas, all within a few short minutes!
+        </p>
+      </div>
+      <div class="form-wrapper">
+        <form id="videoUrlForm" action="/splashScreen" method="post">
+          <input type="text" id="video-url-input" name="videoUrl" placeholder="Please paste Youtube Video link here (up to 10 minutes max)">
+          <button type="submit" id="myButton">Summarize</button>
+          <span id="error-message" style="color: red; display: none;">Please enter API key</span>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="api-key-modal" style="display:none;">
+    <h2>API Key Update</h2>
+    <input type="text" id="api-key-input" placeholder="Enter your API Key here">
+    <button id="save-api-key">Save</button>
+    <button id="cancel-api-key">Cancel</button>
+  </div>
+
+  <script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function () {
+      // Attach event listener for form submission
+      document.getElementById('videoUrlForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Always prevent the default form submission initially
+
+        const apiKey = localStorage.getItem('apiKey');
+        if (!apiKey) {
+          // Show error message if API key is not found
+          document.getElementById('error-message').style.display = 'inline';
+        } else {
+          // If API key exists, send it to the server to save in the session
+          fetch('/set_api_key', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ apiKey: apiKey }),
+          }).then(response => {
+            if (response.ok) {
+              console.log('API Key saved to session');
+              // Submit the form programmatically if the API key was successfully saved
+              document.getElementById('videoUrlForm').submit();
+            } else {
+              // Handle the case where saving the API key was not successful
+              document.getElementById('error-message').innerText = 'Failed to save API Key. Please try again.';
+              document.getElementById('error-message').style.display = 'inline';
+            }
+          }).catch(error => {
+            // Handle any network errors
+            console.error('Error saving API Key:', error);
+            document.getElementById('error-message').innerText = 'Network error. Please try again.';
+            document.getElementById('error-message').style.display = 'inline';
+          });
+        }
+      });
+
+      // Attach event listener for API Key trigger
+      document.getElementById('api-key-trigger').addEventListener('click', function () {
+        document.getElementById('api-key-modal').style.display = 'block';
+      });
+
+      // Attach event listener for saving the API Key
+      document.getElementById('save-api-key').addEventListener('click', function () {
+        const apiKey = document.getElementById('api-key-input').value;
+        localStorage.setItem('apiKey', apiKey);
+        fetch('/set_api_key', { // Send to server to save in session
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ apiKey: apiKey }),
+        }).then(response => {
+          if (response.ok) {
+            console.log('API Key saved to session');
+          }
+        });
+        document.getElementById('api-key-modal').style.display = 'none';
+      });
+
+      // Attach event listener for cancelling the API Key input
+      document.getElementById('cancel-api-key').addEventListener('click', function () {
+        document.getElementById('api-key-modal').style.display = 'none';
+      });
+
+      // Load the API key from local storage and populate the input field if it exists
+      const savedApiKey = localStorage.getItem('apiKey');
+      if (savedApiKey) {
+        document.getElementById('api-key-input').value = savedApiKey;
+      }
+    });
+  </script>
+  <footer>
+    <p>© 2023 {{title}}. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>

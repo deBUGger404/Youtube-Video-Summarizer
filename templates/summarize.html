@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='summarize.css')}}" />
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <a href="/">
+        <img src="{{ url_for('static', filename='main_logo.png') }}" alt="My Logo">
+      </a>
+    </div>
+    <ul class="menu">
+      <li><a href="/">Home</a></li>
+      <li><a href="https://github.com/deBUGger404" target="_blank"></a>Github</a></li>
+      <li><a href="https://github.com/deBUGger404/Youtube-Video-Summarizer/issues/new" target="_blank">Issues</a></li>
+      <li><a href="https://trakssblog.blogspot.com/" target="_blank">Blog</a></li>
+    </ul>
+  </nav>
+
+<div class="body-content">
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Summarize')" id="defaultOpen">Summarize</button>
+  <button class="tablinks" onclick="openCity(event, 'Transcript')">Transcript</button>
+  <button class="tablinks" onclick="openCity(event, 'VideoInfo')">VideoInfo</button>
+</div>
+
+<div id="Summarize" class="tabcontent">
+  <!-- <h3>Summarize</h3> -->
+  <div id="summaryContent"></div>
+  <hr/>
+</div>
+
+<div id="Transcript" class="tabcontent">
+  {% for key, value in transct.items() %}
+  <div class="Transcript-items">
+    <span id="time">{{ key }}</span>
+    <span id="text"><p>{{value}}</p></span>
+  </div>
+  {% endfor %}
+</div>
+
+<div id="VideoInfo" class="tabcontent">
+  <span class="video-info-des">This web app provides important details about YouTube videos, such as title, author, duration, upload date, and view count. It simplifies the process of gathering information and is an essential tool for anyone interested in learning more about their favorite videos.</span>
+  {% if video_info is mapping: %}
+  <table>
+    <thead>
+      <tr>
+        <th>Data Type</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key, value in video_info.items() %}
+        <tr>
+          <td>{{ key }}</td>
+          <td>{{ value }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>{{video_info}}</p>
+  {% endif %}
+</div>
+</div>
+<!-- Include markdown-it library -->
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<script>
+  // Define the markdown content
+  var summaryMarkdown = `{{summaryv2}}`;
+
+  // Function to render markdown content
+  function renderMarkdown(markdown) {
+    try {
+      var md = window.markdownit();
+      return md.render(markdown);
+    } catch (error) {
+      console.error('Error rendering markdown:', error);
+      return '<p>Error rendering markdown content.</p>';
+    }
+  }
+
+  // Render markdown content
+  var summaryElement = document.getElementById('summaryContent');
+  if (summaryElement) {
+    summaryElement.innerHTML = renderMarkdown(summaryMarkdown);
+  }
+</script>
+
+<script>
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+</body>
+</html> 
